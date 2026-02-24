@@ -1,0 +1,12 @@
+node_modules/
+lib/
+tsconfig.tsbuildinfo
+package-lock.json
+.python-version
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.pyc
+.ipynb_checkpoints/
+jupyterlite_pyodide_server/labextension/static/

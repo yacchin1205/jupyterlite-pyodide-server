@@ -1,0 +1,36 @@
+{
+  "name": "lite-redirect",
+  "version": "0.1.0",
+  "description": "Serve JupyterLite with Pyodide kernel and redirect /lab to /lite/",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*.{d.ts,js,js.map,json}",
+    "style/**/*.{css,js}"
+  ],
+  "scripts": {
+    "build": "jlpm build:lib && jlpm build:labextension:dev",
+    "build:lib": "tsc",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "build:prod": "jlpm clean && jlpm build:lib && jlpm build:labextension",
+    "clean": "rimraf lib tsconfig.tsbuildinfo jupyterlite_pyodide_server/labextension"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^4.0.0"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^4.0.0",
+    "rimraf": "^5.0.1",
+    "typescript": "~5.0.0"
+  },
+  "sideEffects": [
+    "style/*.css",
+    "style/index.js"
+  ],
+  "styleModule": "style/index.js",
+  "jupyterlab": {
+    "extension": true,
+    "outputDir": "jupyterlite_pyodide_server/labextension"
+  }
+}

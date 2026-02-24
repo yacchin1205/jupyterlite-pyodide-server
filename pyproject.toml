@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling>=1.5.0", "jupyterlab>=4.0.0,<5", "hatch-nodejs-version>=0.3.2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jupyterlite-pyodide-server"
+readme = "README.md"
+license = { text = "BSD-3-Clause" }
+requires-python = ">=3.8"
+dependencies = [
+    "jupyter_server>=2.0.0",
+    "jupyterlite-core",
+    "jupyterlite-pyodide-kernel",
+    "jupyterlite-server-contents",
+]
+dynamic = ["version", "description"]
+
+[project.scripts]
+jupyterlite-pyodide-server-build = "jupyterlite_pyodide_server.build:main"
+
+[tool.hatch.version]
+source = "nodejs"
+
+[tool.hatch.metadata.hooks.nodejs]
+fields = ["description"]
+
+[tool.hatch.build.targets.sdist]
+artifacts = ["jupyterlite_pyodide_server/labextension"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"jupyterlite_pyodide_server/labextension" = "share/jupyter/labextensions/lite-redirect"
+"install.json" = "share/jupyter/labextensions/lite-redirect/install.json"
+"jupyterlite_pyodide_server/etc/jupyterlite_pyodide_server.json" = "etc/jupyter/jupyter_server_config.d/jupyterlite_pyodide_server.json"
+
+[tool.hatch.build.hooks.jupyter-builder]
+dependencies = ["hatch-jupyter-builder>=0.5"]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = [
+    "jupyterlite_pyodide_server/labextension/static/style.js",
+    "jupyterlite_pyodide_server/labextension/package.json",
+]
+skip-if-exists = ["jupyterlite_pyodide_server/labextension/static/style.js"]
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+build_cmd = "build:prod"
+npm = ["jlpm"]
+
+[tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
+build_cmd = "build"
+npm = ["jlpm"]
+source_dir = "src"
+build_dir = "jupyterlite_pyodide_server/labextension"
