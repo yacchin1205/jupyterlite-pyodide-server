@@ -27,6 +27,7 @@ def _load_jupyter_server_extension(server_app):
     web_app = server_app.web_app
     base_url = web_app.settings.get("base_url", "/")
 
+    lite_target = f"{base_url}lite/"
     lite_url = f"{base_url}lite/(.*)"
     handlers = [
         (
@@ -35,12 +36,12 @@ def _load_jupyter_server_extension(server_app):
             {
                 "path": LITE_OUTPUT_DIR,
                 "default_filename": "index.html",
+                "lite_prefix": lite_target,
             },
         ),
     ]
     web_app.add_handlers(".*$", handlers)
 
-    lite_target = f"{base_url}lite/"
     server_app.log.info(
         f"JupyterLite serving from {LITE_OUTPUT_DIR} at {lite_target}"
     )
