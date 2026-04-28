@@ -23,10 +23,25 @@ def main():
         }
     }
 
+    cockle_config = {
+        "packages": {
+            "vim": {},
+            "nano": {},
+            "tree": {},
+        },
+        "aliases": {
+            "vi": "vim",
+        },
+    }
+
     with tempfile.TemporaryDirectory() as build_dir:
         config_path = os.path.join(build_dir, "jupyter-lite.json")
         with open(config_path, "w") as f:
             json.dump(lite_config, f)
+
+        cockle_path = os.path.join(build_dir, "cockle-config-in.json")
+        with open(cockle_path, "w") as f:
+            json.dump(cockle_config, f)
 
         cmd = [
             sys.executable, "-m", "jupyter", "lite", "build",
