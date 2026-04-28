@@ -12,6 +12,7 @@ dependencies = [
     "jupyterlite-core",
     "jupyterlite-pyodide-kernel",
     "jupyterlite-server-contents",
+    "jupyterlite-terminal",
 ]
 dynamic = ["version", "description"]
 
