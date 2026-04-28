@@ -19,6 +19,7 @@ def main():
         "jupyter-config-data": {
             "serverContentsBaseUrl": "../../",
             "serverContentsToken": "",
+            "terminalsAvailable": True,
         }
     }
 
